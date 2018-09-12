@@ -113,7 +113,7 @@ public class VirtualPetEngine extends Observable {
 	
 	public void incrementFullnessBySignificant()
 	{
-		int magnitude = 20;
+		int magnitude = 30;
 		if(100-magnitude > this.fullness) {
 			this.fullness += magnitude;
 		} else this.fullness = 100;
@@ -142,7 +142,7 @@ public class VirtualPetEngine extends Observable {
 	
 	public void incrementEnergyBySignificant()
 	{
-		int magnitude= 20;
+		int magnitude= 30;
 		if(100-magnitude > this.energy) {
 			this.energy += magnitude;
 		} else this.energy = 100;
@@ -168,7 +168,7 @@ public class VirtualPetEngine extends Observable {
 	
 	public void incrementStimulationBySignificant()
 	{
-		int magnitude = 20;
+		int magnitude = 30;
 		if(100-magnitude > this.stimulation) {
 			this.stimulation += magnitude;
 		} else this.stimulation = 100;
