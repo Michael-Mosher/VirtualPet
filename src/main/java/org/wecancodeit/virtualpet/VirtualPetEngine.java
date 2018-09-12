@@ -11,6 +11,7 @@ public class VirtualPetEngine extends Observable {
 	protected int stimulation_minimum = 1;
 	protected int energy_minimum = 1;
 	private String name = "";
+	private int iAbstractAge = 0;
 
 	/**
 	 * The constructor for an Infovore (just calling it VirtualPet for the project, but will extended VirtualPet on next chapter)
@@ -184,5 +185,15 @@ public class VirtualPetEngine extends Observable {
 	public void incrementStimulationByPoor()
 	{
 		this.stimulation += 0;
+	}
+	
+	public void incrementAge()
+	{
+		this.iAbstractAge++;
+	}
+	
+	public int getAge()
+	{
+		return this.iAbstractAge;
 	}
 }

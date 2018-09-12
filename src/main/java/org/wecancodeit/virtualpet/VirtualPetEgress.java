@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class VirtualPetEgress implements IVirtualPetEgress {
 	private SysOutDelegate sysOutDelegate = (String value) -> System.out.println(value);
 	private List<String> aFoodGiven = new ArrayList<>();
+	private List<String> aFoodDomain = new ArrayList<>();
 	
 	public VirtualPetEgress(SysOutDelegate oOutDelegate)
 	{
@@ -19,15 +20,15 @@ public class VirtualPetEgress implements IVirtualPetEgress {
 	@Override
 	public void outputOptions(VirtualPetEngine pet) {
 		this.sysOutDelegate.println("Choose an option.");
-		this.sysOutDelegate.println("Press 1 to deposit funds.");
-		this.sysOutDelegate.println("Press 2 to withdraw funds.");
-		this.sysOutDelegate.println("Press 3 to get balance.");
+		this.sysOutDelegate.println("Press 1 to feed the infovore.");
+		this.sysOutDelegate.println("Press 2 to let the infovore watch cat videos.");
 		this.sysOutDelegate.println("Type \"quit\" at anytime to abandon " + pet.getName());
 	}
 
 	@Override
 	public void outputClosing(VirtualPetEngine pet) {
 		this.sysOutDelegate.println("Your data was found ... lacking");
+		this.outputGameOver(pet);
 	}
 
 
@@ -57,6 +58,11 @@ public class VirtualPetEgress implements IVirtualPetEgress {
 								+ ", Google.com domain: "
 				);
 				sAdditionalInput = oVPIngress.currentInput();
+				String sModifiedNew = sAdditionalInput.replaceAll("/{2,}", "");
+				int iLastIndex = sModifiedNew.indexOf("/")!=-1 ? sModifiedNew.indexOf("/") : sModifiedNew.length();
+				int iStartIndex = sModifiedNew.indexOf(":")!=-1&&sModifiedNew.indexOf(":")<iLastIndex ? sModifiedNew.indexOf(":")+1 : 0;
+				String sDomainOnly = sModifiedNew.substring(iStartIndex, iLastIndex);
+				this.aFoodDomain.add(sDomainOnly);
 				this.aFoodGiven.add(sAdditionalInput);
 				if((sAdditionalInput.replaceAll("[//]", "").indexOf("github.com")!=-1 &&
 						(sAdditionalInput.replaceAll("[//]", "").indexOf("github.com")<sAdditionalInput.replaceAll("[//]", "").indexOf("/")
@@ -79,7 +85,7 @@ public class VirtualPetEgress implements IVirtualPetEgress {
 						pet.incrementEnergyByPoor();
 						pet.incrementStimulationByPoor();
 						this.outputDisappointedFoodMessage(sAdditionalInput);
-					} else if(this.isThereMoreThanOneOfDomainFoodEntry(sAdditionalInput)) {
+					} else if(this.isThereMoreThanOneOfDomainFoodEntry(sDomainOnly)) {
 						pet.incrementFullnessByModest();
 						pet.incrementEnergyByPoor();
 						pet.incrementStimulationByModest();
@@ -98,7 +104,7 @@ public class VirtualPetEgress implements IVirtualPetEgress {
 						pet.incrementEnergyByPoor();
 						pet.incrementStimulationByPoor();
 						this.outputDisappointedFoodMessage(sAdditionalInput);
-					} else if(this.isThereMoreThanOneOfDomainFoodEntry(sAdditionalInput)) {
+					} else if(this.isThereMoreThanOneOfDomainFoodEntry(sDomainOnly)) {
 						pet.incrementFullnessByModest();
 						pet.incrementEnergyByPoor();
 						pet.incrementStimulationByModest();
@@ -122,10 +128,25 @@ public class VirtualPetEgress implements IVirtualPetEgress {
 						this.outputPoisonFoodMessage(sAdditionalInput);
 					}
 				}
+			} else if (sOptionChosen.equalsIgnoreCase("2") || sOptionChosen.equalsIgnoreCase("cats")) {
+				pet.incrementFullnessByPoor();
+				pet.incrementEnergyBySignificant();
+				pet.incrementStimulationByPoor();
+				this.outputCatsEnergyMessage(pet);
 			}
 		}
 	}
 	
+	private void outputCatsEnergyMessage(VirtualPetEngine pet) {
+		int iEmojiDecimal = 128008; // \u1F408
+		String sCatEmoji = new String(Character.toChars(iEmojiDecimal), 0,2);
+		this.sysOutDelegate.println("narrator: \"Little " + pet.getName()
+					+ " exclaimed, 'Cats" 
+					+ "!' Then spent the next three hours resting while watching cat videos.\"");
+	}
+
+
+
 	private void outputPoisonFoodMessage(String sAdditionalInput) {
 		this.sysOutDelegate.println("pet: \"Please, no more of this, this garbage. It is poison!\"");
 	}
@@ -144,24 +165,12 @@ public class VirtualPetEgress implements IVirtualPetEgress {
 
 	private boolean isThereMoreThanOneOfFoodEntry(String sFoodEntry)
 	{
-		return this.aFoodGiven.lastIndexOf(sFoodEntry)>this.aFoodGiven.indexOf(sFoodEntry);
+		return this.aFoodGiven.lastIndexOf(sFoodEntry) > this.aFoodGiven.indexOf(sFoodEntry);
 	}
 	
 	private boolean isThereMoreThanOneOfDomainFoodEntry(String sFoodEntry)
 	{
-		boolean answer = false;
-		String sModifiedNew = sFoodEntry.replaceAll("[//]", "");
-		String sNewDomain = sModifiedNew.lastIndexOf("/")>sModifiedNew.indexOf(".") ? sModifiedNew.split("[/]")[0] : sModifiedNew;
-		String temp = "";
-		for (String sFoodUrl : aFoodGiven) {
-			temp = temp.replaceAll("[//]", "");
-			temp = temp.lastIndexOf("/")>temp.indexOf(".") ? temp.split("[/]")[0] : temp;
-			if(temp.equals(sNewDomain)) {
-				answer = true;
-				break;
-			}
-		}
-		return answer;
+		return this.aFoodDomain.lastIndexOf(sFoodEntry) > this.aFoodDomain.indexOf(sFoodEntry);
 	}
 
 
@@ -171,13 +180,17 @@ public class VirtualPetEgress implements IVirtualPetEgress {
 		
 	}
 
-
+	private void outputGameOver(VirtualPetEngine pet)
+	{
+		this.sysOutDelegate.println("Game Over. You last for " + pet.getAge() + " rounds.");
+		System.exit(0);
+	}
 
 	@Override
 	public void outputStatus(VirtualPetEngine pet) {
 		if(pet.getEnergy()==1 || pet.getFullness()==1 || pet.getStimulation()==1) {
 			this.sysOutDelegate.println("pet: \"Goodbye, simple human. Your care was ... disappointing");
-			System.exit(0);
+			this.outputGameOver(pet);
 		} else if (pet.getEnergy() < 50) {
 			this.sysOutDelegate.println("pet: \"I tire. Let me watch cat videos.");
 		} else if(pet.getStimulation()<pet.getFullness()) {

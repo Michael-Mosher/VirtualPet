@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 import org.wecancodeit.virtualpet.SysOutDelegate;
 
-import atm.AtmApp;
-
 public class VirtualPetApp {
 	private static IVirtualPetIngress oVPIngress;
 	private static IVirtualPetEgress oVPEgress;
@@ -18,7 +16,6 @@ public class VirtualPetApp {
 	
 	public static void main(String[] args)
 	{
-		
 		VirtualPetApp.oVPIngress = new VirtualPetIngress(VirtualPetApp.inArg);
 		VirtualPetApp.oVPEgress = new VirtualPetEgress(VirtualPetApp.outArg);
 		VirtualPetApp.pet = new VirtualPetEngine(100,100,100);
@@ -70,12 +67,7 @@ public class VirtualPetApp {
 		VirtualPetApp.pet.decrementEnergy();
 		VirtualPetApp.pet.decrementFullness();
 		VirtualPetApp.pet.decrementStimulation();
+		VirtualPetApp.pet.incrementAge();
 	}
 
-//	protected static void setInitialBalance(BigDecimal bigDecimal) {
-//		if (VirtualPetApp.bIsTesting) {
-//			VirtualPetApp.oInitialBalance = bigDecimal;
-//		}
-//		
-//	}
 }

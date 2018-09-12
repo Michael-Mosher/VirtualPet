@@ -8,8 +8,6 @@ import java.io.ByteArrayInputStream;
 
 import org.junit.Test;
 
-import atm.AtmApp;
-import atm.AtmTest;
 
 public class VirtualPetTest implements IVirtualPetIngress, IVirtualPetEgress {
 	
@@ -249,6 +247,48 @@ Infovore edition
 		VirtualPetApp.main(new String[0]);
 		// assert
 		assertThat(this.lastSysOutMessage, is(sExpectedOut));
+	}
+
+	@Override
+	public void outputOpening(VirtualPetEngine pet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void outputOptions(VirtualPetEngine pet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void outputClosing(VirtualPetEngine pet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void outputNameReaction(VirtualPetEngine pet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void processOption(VirtualPetEngine pet, IVirtualPetIngress oVPIngress, String sOptionChosen) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void outputStatus(VirtualPetEngine pet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String currentInput() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 //	@Test
