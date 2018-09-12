@@ -10,6 +10,7 @@ public class VirtualPetEngine extends Observable {
 	protected int fullness_minimum = 1;
 	protected int stimulation_minimum = 1;
 	protected int energy_minimum = 1;
+	private String name = "";
 
 	/**
 	 * The constructor for an Infovore (just calling it VirtualPet for the project, but will extended VirtualPet on next chapter)
@@ -97,7 +98,91 @@ public class VirtualPetEngine extends Observable {
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.name;
+	}
+
+	public void setName(String sInstanceName) {
+		this.name = sInstanceName;
+	}
+	
+	public void incrementFullnessByTotal()
+	{
+		this.fullness = 100;
+	}
+	
+	public void incrementFullnessBySignificant()
+	{
+		int magnitude = 20;
+		if(100-magnitude > this.fullness) {
+			this.fullness += magnitude;
+		} else this.fullness = 100;
+	}
+	
+	public void incrementFullnessByModest()
+	{
+		int magnitude= 10;
+		if(100-magnitude > this.fullness) {
+			this.fullness += magnitude;
+		} else this.fullness = 100;
+	}
+	
+	public void incrementFullnessByPoor()
+	{
+		int magnitude= 0;
+		if(100-magnitude > this.fullness) {
+			this.fullness += magnitude;
+		}
+	};
+	
+	public void incrementEnergyByTotal()
+	{
+		this.energy = 100;
+	}
+	
+	public void incrementEnergyBySignificant()
+	{
+		int magnitude= 20;
+		if(100-magnitude > this.energy) {
+			this.energy += magnitude;
+		} else this.energy = 100;
+	}
+	
+	public void incrementEnergyByModest()
+	{
+		int magnitude= 10;
+		if(100-magnitude > this.energy) {
+			this.energy += magnitude;
+		} else this.energy = 100;
+	}
+	
+	public void incrementEnergyByPoor()
+	{
+		this.energy += 0;
+	}
+	
+	public void incrementStimulationByTotal()
+	{
+		this.stimulation = 100;
+	}
+	
+	public void incrementStimulationBySignificant()
+	{
+		int magnitude = 20;
+		if(100-magnitude > this.stimulation) {
+			this.stimulation += magnitude;
+		} else this.stimulation = 100;
+	}
+	
+	public void incrementStimulationByModest()
+	{
+		int magnitude = 10;
+		if(100-magnitude > this.stimulation) {
+			this.stimulation += magnitude;
+		} else this.stimulation = 100;
+	}
+	
+	public void incrementStimulationByPoor()
+	{
+		this.stimulation += 0;
 	}
 }

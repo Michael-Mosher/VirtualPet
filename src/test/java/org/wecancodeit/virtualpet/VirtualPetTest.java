@@ -219,7 +219,7 @@ Infovore edition
 	{
 		String sExpectedOut = new String("Your data was found ... lacking");
 		VirtualPetApp.setSysOutDelegate((value) -> this.lastSysOutMessage  = value);
-		String sInputPayload = "quit\n";
+		String sInputPayload = "Ralf\nquit\n";
 		VirtualPetApp.setSysInDelegate(
 				new ByteArrayInputStream(
 						sInputPayload.getBytes()
@@ -230,6 +230,46 @@ Infovore edition
 		// assert
 		assertThat(this.lastSysOutMessage, is(sExpectedOut));
 	}
+	
+	@Test
+	public void assertInputGithubAddressWillGiveSatiatedMessage()
+	{
+		String sExpectedOut = new String("pet: \"This is the satiated message\"");
+		VirtualPetApp.setSysOutDelegate((value) -> this.lastSysOutMessage  = value);
+		String option = "1"; //feed
+		String sFeedPayload = new String("https://github.com/Michael-Mosher/Module3ShoppingCart");
+		String sInputPayload = "Ralf\n" + option + "\n" + sFeedPayload + "\nquit\n";
+		VirtualPetApp.setSysInDelegate(
+				new ByteArrayInputStream(
+						sInputPayload.getBytes()
+						)
+				);
+		VirtualPetApp.setIsTesting();
+		// act
+		VirtualPetApp.main(new String[0]);
+		// assert
+		assertThat(this.lastSysOutMessage, is(sExpectedOut));
+	}
+	
+//	@Test
+//	public void assertInputGithubAddressTwiceWillGiveDisappointedMessage()
+//	{
+//		String sExpectedOut = new String("pet: \"This is the disappointed message\"");
+//		VirtualPetApp.setSysOutDelegate((value) -> this.lastSysOutMessage  = value);
+//		String option = "1"; //feed
+//		String sFeedPayload = new String("https://github.com/Michael-Mosher/Module3ShoppingCart");
+//		String sInputPayload = "Ralf\n" + option + "\n" + sFeedPayload + "\n" + option + "\n" + sFeedPayload + "\nquit\n";
+//		VirtualPetApp.setSysInDelegate(
+//				new ByteArrayInputStream(
+//						sInputPayload.getBytes()
+//						)
+//				);
+//		VirtualPetApp.setIsTesting();
+//		// act
+//		VirtualPetApp.main(new String[0]);
+//		// assert
+//		assertThat(this.lastSysOutMessage, is(sExpectedOut));
+//	}
 	
 	/*
 	 * @Test
